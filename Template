@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pb push_back
+#define pii pair<int,int>
+#define pll pair<ll,ll>
+#define x first
+#define y second
+#define all(x) x.begin(),x.end()
+#define f(i,a,b) for(ll i=a;i<b;++i)
+#define rof(i,a,b) for(ll i=a;i>b;--i)
+#define endl "\n"  //632)D TLE 2000ms for endl and AC 499ms for \n
+ll mod=1e9+7;
+//(1LL<<i) left shift/powers of 2 //dont us pow(2,_)
+//All Combinations/Permu in circle (n-1)! // circle ka dekho OR 0 se end then from beg. to 0 , 1 se end then beg. to 1 , ... 
+//cf dont use unordered map. use simply map<... , ... > m;
+//They are Iterator minus v.begin() krna //lower_bound(v.begin(),v.end(),x)-v.begin()  //upper_bound(v.begin(),v.end(),x)-v.begin()
+// lower bound tells greater than or equal to // upper bound tells strictly greater than
+// ll lcm(ll a, ll b){ return a / __gcd(a, b) * b; }
+//memset can initialize to 0 or -1 ONLY //memset(str, 't', sizeof(str)); // string //memset(a, 0, sizeof(a));  //1D array    // memset(a,0,sizeof(a[0][0])*n*n); //2D array
+// set.insert(),find() //for(auto it=set.begin();....) cout<<*it;   // sort(v.begin(),v.end(),compare)
+//bool lexicographical_compare(all(s1),all(s2)) //1 if s1<s2
+//Binary Search socho. n me k size ka kaam krna  ho aur n<10^6,k<10^9 me O(nlogk) works. 1 se 1e9 pe Binary search maro har me O(n) kaam!
+ //s1+=s2 zada time. use s1.append(s2).
+//priority_queue <ll> pq; // By DEFAULT, MAX Priority Queue
+// priority_queue <ll, vector<ll>, greater<ll>> pq; // MIN Priority Queue  
+//bool compare(pll h1,pll h2) { return (hi.first<h2.first); }  //ascending
+
+void solve()
+{
+    
+    
+
+}
+
+int main()
+{
+
+ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+//cout << fixed << setprecision(14);
+    ll t=1;
+    cin>>t;
+    while(t--)
+    {
+     solve();
+    }
+cerr << "Time elapsed: " << 1000 * clock() / CLOCKS_PER_SEC << "ms\n";
+}
