@@ -1,0 +1,234 @@
+//Sarthak
+FUNCTIONS-
+1. Power simple O(log power)
+    Power Modulo O(log power)
+    Factorial Modulo ( n! % p) 
+    Modulo Inverse  O(log mod)  
+2. ncr%mod O(1) or O(log n)
+3. seive of erath. prime numbers [0 ,n] me in O(n log log n)
+4. Euler Totient function O(sqrt(n)) -> kisi bhi n ki range me kitne hai coprime with n. ( [0,n) or [0,n] me kitne are coprime with n) //same hi h coz n never coprime with n itself
+5. Sort arrays based on other array [ sort 3 arrays example ](Alternate: use vector<pair<>> type)
+6. nth fibonacci on O(log n)11. unordered map custom hash
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+1. Power simple O(log power)
+    Power Modulo O(log power)
+    Factorial Modulo
+    Modulo Inverse  O(log mod)  
+
+ll power_simple(ll x,ll n)  //x^y O(Log Power n)
+{  
+    if(n == 0) return 1;  
+    ll tmp = power_simple(x,n/2);  
+    if (n%2 == 0)  
+        return tmp*tmp;  
+    else
+    {   if(n > 0) return x * tmp * tmp;  
+        else return (tmp * tmp) / x;  
+    }  
+}  
+
+ll power_mod(ll x,ll n,ll m=mod) // x^n %mod // O(Log Power n)
+{ll ans=1;
+while(n!=0)
+{
+    if(n&1==1)
+    {
+        ans=(ans%m * x%m)%m;
+    }
+    x=(x%m * x%m)%m;
+    n=n>>1;
+}
+    return ans;
+}
+
+ll factorial_mod_prime(ll n,ll p) // n! %p
+{
+       // = p - [(n+1)*(n+2).....*(p-1)]^(p-2) %p
+        if(n>=p)  return 0;
+        long long ans=1;
+        n=n+1;
+        while(n<=p-1)
+        {
+            ans= (ans%p * n%p) %p;
+            n++;
+        }
+        long long temp=1;
+         ans= power_mod(ans,p-2,p);
+       return p-ans;
+}
+ 
+ll modInv(ll a, ll m=mod)  // ((1/a)%mod )= ((a^(-1))%mod) = modInv(a,mod) 
+{ 
+    ll m0 = m; 
+    ll y = 0, x = 1; 
+    if (m == 1) 
+        return 0; 
+    while (a > 1) { 
+        // q is quotient 
+        ll q = a / m; 
+        ll t = m; 
+        // m is remainder now, process same as // Euclid's algo 
+        m = a % m, a = t; 
+        t = y; 
+        // Update y and x 
+        y = x - q * y; 
+        x = t; 
+    } 
+    // Make x positive 
+    if (x < 0) 
+        x += m0; 
+    return x; 
+} 
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+2. ncr%mod O(1) or O(log n)
+
+ll fact[500001];
+ll power(ll a, ll b)
+{
+	if(b==0) return 1;
+ 	ll t = power(a,b/2);
+	t*=t;
+	t%=mod;
+	if(b&1) t*=a;
+	t%=mod;
+	return t;
+}
+ll ncr(ll n, ll r)
+{
+	if(r>n) return 0;
+ 	ll t = fact[n];
+	t*=power(fact[r],mod-2);
+	t%=mod;
+	t*=power(fact[n-r],mod-2);
+	t%=mod;
+	return t;
+}
+
+// isko main me likhdo
+// fact[0]=1;
+//for(int i=1;i<500001;i++)
+//fact[i]=fact[i-1]*i%mod;
+
+___________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+3. Sieve- all prime numbers isPrime[0,n] me True hai
+
+bool isPrime[500001]; 
+void sieve()
+{ //1 or true means prime hai
+	ll n=500001;
+f(i,0,n) isPrime[i]=true;
+isPrime[0] = false;isPrime[1] = false;
+for(ll i=2;i<=sqrt(n);i++)
+{	if(isPrime[i] == true)
+	{
+		for(int j=i*i;j<=n;j+=i)
+		{isPrime[j] = false;
+		}
+	}
+}
+}
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+4. Euler Totient phi(n) O(sqrt(n))
+
+ll phi(ll n) {
+    ll result = n;
+    for (ll i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            while (n % i == 0)
+                n /= i;
+            result -= result / i;
+        }
+    }
+    if (n > 1)
+        result -= result / n;
+    return result;
+}
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+5. fibo O(log n)
+
+#include<iostream>
+using namespace std;
+
+void multiply(int A[2][2],int M[2][2]){
+
+	int firstValue = A[0][0] * M[0][0] + A[0][1] * M[1][0];
+	int secondValue = A[0][0] * M[0][1] + A[0][1] * M[1][1];
+	int thirdValue = A[1][0] * M[0][0] + A[1][1] * M[1][0];
+	int fourthValue = A[1][0] * M[0][1] + A[1][1] * M[1][1];
+
+	A[0][0] =firstValue;
+	A[0][1] = secondValue;
+	A[1][0] = thirdValue;
+	A[1][1] = fourthValue;
+	
+}
+void power(int A[2][2],int n){
+	if(n==1){
+		return;
+	}
+	power(A,n/2);
+	multiply(A,A);
+	if(n%2 !=0){
+		int F[2][2] = {{1,1},{1,0}};
+		multiply(A,F);
+	}
+}
+int getFibonacci(int n){
+	if(n==0 || n==1){
+		return n;
+	}
+	int A[2][2] = {{1,1},{1,0}};
+	power(A,n-1);
+	return A[0][0];
+}
+int main(){
+	int n;
+	cin >> n;
+	cout << getFibonacci(n)<<endl;
+	return 0;
+}
+
+REAL 10.   ncr() %mod in O(1) ya O(log n)
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+6. Custom Hash
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+/*
+//https://codeforces.com/blog/entry/62393
+//custom hash
+struct custom_hash {
+    static uint64_t splitmix64(uint64_t x) {
+        // http://xorshift.di.unimi.it/splitmix64.c
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
+    size_t operator()(uint64_t x) const {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+};
+*/
+int main()
+{
+ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+//  freopen("input_file_ka_naam.txt","r",stdin);
+//  freopen("output_file_ka_naam.txt","w",stdout);
+//unordered_map<long long, int, custom_hash> safe_map;
+//gp_hash_table<long long, int, custom_hash> safe_hash_table;
+}
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
